@@ -165,7 +165,89 @@
     Featured Products
   </div>
 
-  
+  <!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ছবি ও ডিসক্রিপশন আপলোড</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    .upload-container {
+      background: white;
+      padding: 20px;
+      max-width: 400px;
+      margin: auto;
+      border-radius: 8px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+    input[type="file"], input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 15px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    #preview img {
+      max-width: 100%;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    #preview p {
+      background: #eee;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="upload-container">
+    <h2>ছবি এবং ডিসক্রিপশন আপলোড করুন</h2>
+
+    <input type="file" id="fileInput" accept="image/*" />
+    <input type="text" id="descriptionInput" placeholder="আপনার ডিসক্রিপশন লিখুন..." />
+
+    <div id="preview"></div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const descriptionInput = document.getElementById('descriptionInput');
+    const preview = document.getElementById('preview');
+
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          preview.innerHTML = `
+            <img src="${e.target.result}" alt="Uploaded Image" />
+            <p>${descriptionInput.value || 'কোনো ডিসক্রিপশন দেওয়া হয়নি।'}</p>
+          `;
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.innerHTML = '';
+      }
+    });
+
+    descriptionInput.addEventListener('input', () => {
+      const img = preview.querySelector('img');
+      if (img) {
+        const descPara = preview.querySelector('p');
+        descPara.textContent = descriptionInput.value || 'কোনো ডিসক্রিপশন দেওয়া হয়নি।';
+      }
+    });
+  </script>
+</body>
+</html>
   <section style="padding: 30px; text-align: center;">
     <h2 style="margin-bottom: 20px; font-size: 1.5rem; color: var(--main-color);">আপনার প্রোডাক্ট আপলোড করুন</h2>
     <input type="file" id="imageUpload" accept="image/*" multiple style="margin-bottom: 20px;">
